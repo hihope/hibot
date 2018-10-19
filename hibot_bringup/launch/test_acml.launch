@@ -1,0 +1,15 @@
+<launch>
+
+  <arg name="3d_sensor" default="r200"/>
+  <arg name="map_file"  default="$(find hibot_bringup)/maps/test.yaml"/>
+
+  <include file="$(find hibot_bringup)/launch/rebot.launch">
+    <arg name="3d_sensor" value="$(arg 3d_sensor)"/>
+  </include>
+
+  <include file="$(find hibot_bringup)/launch/include/nav/acml.launch">
+    <arg name="map_file"  value="$(arg map_file)"/>
+    <arg name="3d_sensor" value="$(arg 3d_sensor)"/>
+  </include>
+  
+</launch>

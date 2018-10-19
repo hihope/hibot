@@ -1,0 +1,12 @@
+<launch>
+
+  <arg name="3d_sensor" default="r200"/>
+  
+  <include file="$(find hibot_bringup)/launch/include/base.launch">
+    <arg name="3d_sensor" value="$(arg 3d_sensor)"/>
+  </include>
+  
+  <include file="$(find hibot_bringup)/launch/include/camera.launch">
+  </include>
+
+</launch>
