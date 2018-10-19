@@ -1,0 +1,50 @@
+diff --git a/turtlebot_bringup/launch/3dsensor.launch b/turtlebot_bringup/launch/3dsensor.launch
+index cd176d0..62d7e34 100644
+--- a/turtlebot_bringup/launch/3dsensor.launch
++++ b/turtlebot_bringup/launch/3dsensor.launch
+@@ -59,19 +59,19 @@
+      This uses lazy subscribing, so will not activate until scan is requested.
+    -->
+   <group if="$(arg scan_processing)">
+-    <node pkg="nodelet" type="nodelet" name="depthimage_to_laserscan" args="load depthimage_to_laserscan/DepthImageToLaserScanNodelet $(arg camera)/$(arg camera)_nodelet_manager">
++<node name="depthimage_to_laserscan" pkg="depthimage_to_laserscan" type="depthimage_to_laserscan" output="screen">
+       <!-- Pixel rows to use to generate the laserscan. For each column, the scan will
+            return the minimum value for those pixels centered vertically in the image. -->
+       <param name="scan_height" value="10"/>
+       <param name="output_frame_id" value="/$(arg camera)_depth_frame"/>
+       <param name="range_min" value="0.45"/>
+-      <remap from="image" to="$(arg camera)/$(arg depth)/image_raw"/>
++      <remap from="image" to="/$(arg camera)/$(arg depth)/image_rect_raw"/>
+       <remap from="scan" to="$(arg scan_topic)"/>
+ 
+       <!-- Somehow topics here get prefixed by "$(arg camera)" when not inside an app namespace,
+            so in this case "$(arg scan_topic)" must provide an absolute topic name (issue #88).
+            Probably is a bug in the nodelet manager: https://github.com/ros/nodelet_core/issues/7 -->
+-      <remap from="$(arg camera)/image" to="$(arg camera)/$(arg depth)/image_raw"/>
++      <remap from="$(arg camera)/image" to="/$(arg camera)/$(arg depth)/image_rect_raw"/>
+       <remap from="$(arg camera)/scan" to="$(arg scan_topic)"/>
+     </node>
+   </group>
+diff --git a/turtlebot_bringup/launch/includes/3dsensor/r200.launch.xml b/turtlebot_bringup/launch/includes/3dsensor/r200.launch.xml
+index 312b9c7..6791912 100644
+--- a/turtlebot_bringup/launch/includes/3dsensor/r200.launch.xml
++++ b/turtlebot_bringup/launch/includes/3dsensor/r200.launch.xml
+@@ -21,18 +21,4 @@
+   <!-- Worker threads for the nodelet manager -->                                                   
+   <arg name="num_worker_threads" default="4" />
+ 
+-  <include file="$(find realsense_camera)/launch/r200_nodelet_rgbd.launch">
+-    <arg name="camera"                          value="$(arg camera)"/>                             
+-    <arg name="camera_type"                     value="R200" />                                     
+-    <arg name="publish_tf"                      value="$(arg publish_tf)"/>                         
+-    <arg name="num_worker_threads"              value="$(arg num_worker_threads)" />                
+-                                                                                                    
+-    <!-- Processing Modules -->                                                                     
+-    <arg name="rgb_processing"                  value="$(arg rgb_processing)"/>                     
+-    <arg name="ir_processing"                   value="$(arg ir_processing)"/>                      
+-    <arg name="depth_processing"                value="$(arg depth_processing)"/>                   
+-    <arg name="depth_registered_processing"     value="$(arg depth_registered_processing)"/>        
+-    <arg name="disparity_processing"            value="$(arg disparity_processing)"/>               
+-    <arg name="disparity_registered_processing" value="$(arg disparity_registered_processing)"/>    
+-  </include>                                                                                        
+ </launch>

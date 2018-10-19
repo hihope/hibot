@@ -1,0 +1,13 @@
+diff --git a/turtlebot_navigation/param/costmap_common_params.yaml b/turtlebot_navigation/param/costmap_common_params.yaml
+index 1868655..aaba569 100644
+--- a/turtlebot_navigation/param/costmap_common_params.yaml
++++ b/turtlebot_navigation/param/costmap_common_params.yaml
+@@ -43,7 +43,7 @@ obstacle_layer:
+ inflation_layer:
+   enabled:              true
+   cost_scaling_factor:  5.0  # exponential rate at which the obstacle cost drops off (default: 10)
+-  inflation_radius:     0.5  # max. distance from an obstacle at which costs are incurred for planning paths.
++  inflation_radius:     0.2  # max. distance from an obstacle at which costs are incurred for planning paths.
+ 
+ static_layer:
+   enabled:              true

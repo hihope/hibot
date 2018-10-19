@@ -1,0 +1,20 @@
+diff --git a/move_base/src/move_base.cpp b/move_base/src/move_base.cpp
+index c608d37..f7652a4 100644
+--- a/move_base/src/move_base.cpp
++++ b/move_base/src/move_base.cpp
+@@ -267,6 +267,15 @@ namespace move_base {
+     action_goal.header.stamp = ros::Time::now();
+     action_goal.goal.target_pose = *goal;
+ 
++    #if 1
++    ROS_ERROR("-sunyoop- clean all the o -before-");
++    planner_costmap_ros_->resetLayers();
++    controller_costmap_ros_->resetLayers();
++    ROS_ERROR("-sunyoop- clean all the o -end-");
++ 
++    ros::Duration(0.5).sleep();
++    #endif
++
+     action_goal_pub_.publish(action_goal);
+   }
+ 
