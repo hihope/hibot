@@ -5,10 +5,10 @@ find_package(catkin REQUIRED COMPONENTS)
 
 catkin_package()
 
-install(
-    PROGRAMS
-      scripts/test.py
-      DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+catkin_install_python(PROGRAMS
+        scripts/test.py
+        scripts/go_rect.py
+        DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 
 install(DIRECTORY launch
